@@ -1,13 +1,21 @@
-import Link from "next/link";
+'use client'
 
-export default function Home() {
+import MovieList from './components/MovieList';
+
+const Page = () => {
   return (
-    <div className="text-center p-8">
-      <h2 className="text-3xl font-semibold">Welcome to the IMR Movie Database</h2>
-      <p className="mt-4 text-gray-600">Browse, add, and manage your favorite movies.</p>
-      <Link href="/movies" className="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
-        View Movies
-      </Link>
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <header>
+        <h1 className="text-3xl font-bold">Movie Database</h1>
+      </header>
+
+      <MovieList />
+
+      <footer className="text-center text-sm">
+        <p>Movie Database - Powered by Next.js and MongoDB</p>
+      </footer>
     </div>
   );
-}
+};
+
+export default Page;

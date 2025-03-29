@@ -1,4 +1,7 @@
-import Link from "next/link";
+// app/layout.js
+
+import Navbar from "./components/Navbar"; // Import Navbar
+import Footer from "./components/Footer"; // Import Footer
 import "./globals.css"; // Ensure global styles are applied
 
 export default function RootLayout({ children }) {
@@ -7,21 +10,13 @@ export default function RootLayout({ children }) {
       <body className="font-sans min-h-screen flex flex-col">
         
         {/* Navbar */}
-        <header className="w-full bg-gray-900 text-white p-4 flex justify-between">
-          <h1 className="text-xl font-bold">IMR Movie Database</h1>
-          <nav>
-            <Link href="/" className="text-blue-400 hover:underline mx-4">Home</Link>
-            <Link href="/movies" className="text-blue-400 hover:underline">Movies</Link>
-          </nav>
-        </header>
+        <Navbar /> 
 
         {/* Page Content */}
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">{children}</main> {/* Render child components inside here */}
 
         {/* Footer */}
-        <footer className="w-full bg-gray-900 text-white text-center p-4">
-          <p>&copy; 2025 Internet Movies Rental Company</p>
-        </footer>
+        <Footer /> 
 
       </body>
     </html>
