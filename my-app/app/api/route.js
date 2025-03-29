@@ -1,9 +1,24 @@
 import { MongoClient, ObjectId } from "mongodb";
 
+// Initialize MongoDB client and database connection
 const client = new MongoClient(process.env.DATABASE_URL);
 const db = client.db("movieDB");
 const movieCollection = db.collection("movies");
 
+/**
+ * Handles adding a new movie to the database.
+ * 
+ * Input:
+ * - JSON request body containing { title, actors, releaseYear }
+ * 
+ * Processing:
+ * - Parses the request body and inserts a new movie document into the collection.
+ * - Converts releaseYear to an integer.
+ * 
+ * Output:
+ * - Returns the created movie object with a 201 status if successful.
+ * - Returns a 500 status if an error occurs.
+ */
 export async function POST(request) {
   try {
     const { title, actors, releaseYear } = await request.json();
@@ -26,6 +41,16 @@ export async function POST(request) {
   }
 }
 
+/**
+ * Handles retrieving all movies from the database.
+ * 
+ * Processing:
+ * - Connects to the database and fetches all movie documents.
+ * 
+ * Output:
+ * - Returns a JSON array of movies with a 200 status if successful.
+ * - Returns a 500 status if an error occurs.
+ */
 export async function GET() {
   try {
     await client.connect();
@@ -38,6 +63,22 @@ export async function GET() {
     await client.close();
   }
 }
+
+/**
+ * Handles updating an existing movie in the database.
+ * 
+ * Input:
+ * - JSON request body containing { id, title, actors, releaseYear }
+ * 
+ * Processing:
+ * - Converts id to an ObjectId and updates the corresponding movie document.
+ * - Converts releaseYear to an integer.
+ * 
+ * Output:
+ * - Returns a 200 status if the update is successful.
+ * - Returns a 404 status if the movie is not found or unchanged.
+ * - Returns a 500 status if an error occurs.
+ */
 
 export async function PUT(request) {
   try {
@@ -61,6 +102,21 @@ export async function PUT(request) {
     await client.close();
   }
 }
+
+/**
+ * Handles deleting a movie from the database.
+ * 
+ * Input:
+ * - JSON request body containing { id }
+ * 
+ * Processing:
+ * - Converts id to an ObjectId and deletes the corresponding movie document.
+ * 
+ * Output:
+ * - Returns a 200 status if the movie is deleted.
+ * - Returns a 404 status if the movie is not found.
+ * - Returns a 500 status if an error occurs.
+ */
 
 export async function DELETE(request) {
   try {

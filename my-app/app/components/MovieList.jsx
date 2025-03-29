@@ -3,12 +3,31 @@
 import { useState, useEffect, useRef } from 'react';
 import MovieForm from './MovieForm';
 
+/**
+ * MovieList Component
+ * 
+ * Description:
+ * - Manages a list of movies with the ability to add, update, and delete movies.
+ * - Fetches movie data from an API when the component is mounted.
+ * - Uses a reference to scroll to the movie form when editing.
+ * 
+ * State:
+ * - movies: Stores the list of movies.
+ * - editingMovie: Stores the movie being edited.
+ * - formRef: A reference to the form element for smooth scrolling.
+ */
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
   const [editingMovie, setEditingMovie] = useState(null); // Track movie being edited
   const formRef = useRef(null); // Reference to the form
 
-  // Fetch movies from API
+  /**
+   * Fetch movies from API when the component is mounted.
+   */
+  useEffect(() => {
+    fetchMovies();
+  }, []);
+
   const fetchMovies = async () => {
     const response = await fetch("/api");
     if (response.ok) {
@@ -17,12 +36,10 @@ const MovieList = () => {
     }
   };
 
-  // Fetch movies when the component is mounted
-  useEffect(() => {
-    fetchMovies();
-  }, []);
-
-  // Handle adding a movie
+  /**
+   * Handle adding a movie to the list.
+   * @param {Object} movieData - The movie details.
+   */
   const handleAddMovie = async (movieData) => {
     const res = await fetch("/api", {
       method: "POST",
@@ -40,7 +57,10 @@ const MovieList = () => {
     }
   };
 
-  // Handle updating an existing movie
+  /**
+   * Handle updating an existing movie.
+   * @param {Object} updatedMovieData - The updated movie details.
+   */
   const handleUpdateMovie = async (updatedMovieData) => {
     const res = await fetch("/api", {
       method: "PUT",
@@ -65,7 +85,10 @@ const MovieList = () => {
     }
   };
 
-  // Handle deleting a movie
+  /**
+   * Handle deleting a movie from the list.
+   * @param {string} id - The ID of the movie to delete.
+   */
   const handleDeleteMovie = async (id) => {
     const res = await fetch("/api", {
       method: "DELETE",
@@ -82,14 +105,20 @@ const MovieList = () => {
     }
   };
 
-  // Scroll to the form
+  /**
+   * Handle initiating the edit process for a movie.
+   * @param {Object} movie - The movie to edit.
+   */
   const handleEditClick = (movie) => {
     setEditingMovie(movie);
     if (formRef.current) {
-      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Ensure smooth scrolling
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Smooth scrolling
     }
   };
 
+  /**
+   * Handle canceling the edit process.
+   */
   const handleCancelEdit = () => {
     setEditingMovie(null); // Reset editing state on cancel
   };

@@ -1,4 +1,3 @@
-// Button.jsx
 
 const Button = ({ type, text, onClick, className }) => {
     return (
